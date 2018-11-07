@@ -73,7 +73,7 @@ end
 
 The second syntax is perhaps a little less intuitive, but avoids creation of extra objects (because you specify them yourself), so you can more easily control your memory and garbage collection costs.
 
-There are too many methods to list here, so you are encouraged to check out the [project documentation](https://www.rubydoc.info/github/sinisterchipmunk/cglm-ruby/master/CGLM/AABB).
+There are too many methods to list here, so you are encouraged to check out the [project documentation](https://www.rubydoc.info/github/sinisterchipmunk/cglm-ruby).
 
 
 ## Development
