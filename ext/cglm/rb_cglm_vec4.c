@@ -529,7 +529,7 @@ VALUE rb_cglm_vec4_equals_vec4(VALUE self, VALUE other) {
   return glm_vec4_eqv(VAL2VEC4(self), VAL2VEC4(other)) ? Qtrue : Qfalse;
 }
 
-/* call-seq: equalish_vec4(other) => true|false
+/* call-seq: equalish_vec4(other[, epsilon]) => true|false
  *
  * Returns true if this vector is very close to equal to the given one. Useful
  * for dealing with the loss of precision during floating point arithmetic.
