@@ -1,14 +1,14 @@
 #include "rb_cglm.h"
 
-/* call-seq: normalize([dest]) => dest | new Vec4
+/* call-seq: normalize([dest]) => dest | new Plane
  *
  * Normalizes this plane and places the result in `dest`, or allocates a new
- * Vec4 if `dest` is omitted.
+ * Plane if `dest` is omitted.
  */
 VALUE rb_cglm_plane_normalize(int argc, VALUE *argv, VALUE self) {
   VALUE dest;
   rb_scan_args(argc, argv, "01", &dest);
-  if (NIL_P(dest)) dest = VEC4_NEW(ALLOC_VEC4);
+  if (NIL_P(dest)) dest = PLANE_NEW(ALLOC_PLANE);
   memcpy(&(VAL2VEC4(self)), &(VAL2VEC4(dest)), sizeof(vec4));
   glm_plane_normalize(VAL2VEC4(dest));
   return dest;
@@ -23,7 +23,14 @@ VALUE rb_cglm_plane_normalize_self(VALUE self) {
   return self;
 }
 
+VALUE rb_cglm_plane_size_bytes(VALUE klass) { return SIZET2NUM(plane_size()); }
+
+VALUE rb_cglm_plane_alignment_bytes(VALUE klass) { return SIZET2NUM(PLANE_ALIGNMENT); }
+
 void Init_cglm_plane() {
-  rb_define_method(rb_cVec4, "normalize",  rb_cglm_plane_normalize,     -1);
-  rb_define_method(rb_cVec4, "normalize!", rb_cglm_plane_normalize_self, 0);
+  rb_define_method(rb_cPlane, "normalize",  rb_cglm_plane_normalize,     -1);
+  rb_define_method(rb_cPlane, "normalize!", rb_cglm_plane_normalize_self, 0);
+
+  rb_define_singleton_method(rb_cPlane, "size",      rb_cglm_plane_size_bytes,      0);
+  rb_define_singleton_method(rb_cPlane, "alignment", rb_cglm_plane_alignment_bytes, 0);
 }

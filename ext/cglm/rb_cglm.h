@@ -52,22 +52,24 @@ void Init_cglm_vec4();
 #define MAT4_ALIGNMENT 16
 #define MAT3_ALIGNMENT 16
 #endif
-
-typedef struct { vec3 corners[2]; } aabb;
-typedef struct { vec4 planes[6];  } frustum;
+#define PLANE_ALIGNMENT VEC4_ALIGNMENT
 
 extern VALUE rb_cFiddle, rb_cPointer, rb_mCGLM, rb_cCGLMBase, rb_cVectorType,
              rb_cMat4, rb_cVec3, rb_cVec4, rb_cAABB, rb_mEuler, rb_cQuat,
-             rb_cFrustum, rb_cMat3, rb_cSphere;
+             rb_cFrustum, rb_cMat3, rb_cSphere, rb_cPlane;
 
+typedef struct { vec3 corners[2]; } aabb;
+typedef struct { vec4 planes[6];  } frustum;
 typedef vec4 quat;
+typedef vec4 plane;
 
-inline size_t vec3_size() { return sizeof(vec3); }
-inline size_t vec4_size() { return sizeof(vec4); }
-inline size_t aabb_size() { return sizeof(aabb); }
-inline size_t mat4_size() { return sizeof(mat4); }
-inline size_t mat3_size() { return sizeof(mat4); }
-inline size_t quat_size() { return sizeof(mat4); }
+inline size_t vec3_size()  { return sizeof(vec3);  }
+inline size_t vec4_size()  { return sizeof(vec4);  }
+inline size_t aabb_size()  { return sizeof(aabb);  }
+inline size_t mat4_size()  { return sizeof(mat4);  }
+inline size_t mat3_size()  { return sizeof(mat4);  }
+inline size_t quat_size()  { return sizeof(mat4);  }
+inline size_t plane_size() { return sizeof(plane); }
 
 #define PTR2FIDDLE(addr, size) rb_funcall(rb_cPointer, rb_intern("new"), 2, PTR2NUM(addr), SIZET2NUM(size))
 
@@ -92,24 +94,25 @@ static inline void *__aligned_alloc(size_t align, size_t size) {
 
 #define ALIGNED_ALLOC(align, size) __aligned_alloc(align, size)
 
-#define VEC3_NEW(addr) CGLM_NEW(rb_cVec3, vec3_size(), addr)
-#define VEC4_NEW(addr) CGLM_NEW(rb_cVec4, vec4_size(), addr)
-#define MAT4_NEW(addr) CGLM_NEW(rb_cMat4, mat4_size(), addr)
-#define MAT3_NEW(addr) CGLM_NEW(rb_cMat3, mat3_size(), addr)
-#define AABB_NEW(addr) CGLM_NEW(rb_cAABB, aabb_size(), addr)
-#define QUAT_NEW(addr) CGLM_NEW(rb_cQuat, quat_size(), addr)
+#define VEC3_NEW(addr)  CGLM_NEW(rb_cVec3,  vec3_size(),  addr)
+#define VEC4_NEW(addr)  CGLM_NEW(rb_cVec4,  vec4_size(),  addr)
+#define MAT4_NEW(addr)  CGLM_NEW(rb_cMat4,  mat4_size(),  addr)
+#define MAT3_NEW(addr)  CGLM_NEW(rb_cMat3,  mat3_size(),  addr)
+#define AABB_NEW(addr)  CGLM_NEW(rb_cAABB,  aabb_size(),  addr)
+#define QUAT_NEW(addr)  CGLM_NEW(rb_cQuat,  quat_size(),  addr)
+#define PLANE_NEW(addr) CGLM_NEW(rb_cPlane, plane_size(), addr);
 
-#define ALLOC_VEC3 ALIGNED_ALLOC(VEC3_ALIGNMENT, sizeof(vec3))
-#define ALLOC_VEC4 ALIGNED_ALLOC(VEC4_ALIGNMENT, sizeof(vec4))
-#define ALLOC_AABB ALIGNED_ALLOC(AABB_ALIGNMENT, sizeof(aabb))
-#define ALLOC_QUAT ALIGNED_ALLOC(QUAT_ALIGNMENT, sizeof(quat))
-#define ALLOC_MAT4 ALIGNED_ALLOC(MAT4_ALIGNMENT, sizeof(mat4))
-#define ALLOC_MAT3 ALIGNED_ALLOC(MAT3_ALIGNMENT, sizeof(mat3))
+#define ALLOC_VEC3  ALIGNED_ALLOC(VEC3_ALIGNMENT,  sizeof(vec3))
+#define ALLOC_VEC4  ALIGNED_ALLOC(VEC4_ALIGNMENT,  sizeof(vec4))
+#define ALLOC_AABB  ALIGNED_ALLOC(AABB_ALIGNMENT,  sizeof(aabb))
+#define ALLOC_QUAT  ALIGNED_ALLOC(QUAT_ALIGNMENT,  sizeof(quat))
+#define ALLOC_MAT4  ALIGNED_ALLOC(MAT4_ALIGNMENT,  sizeof(mat4))
+#define ALLOC_MAT3  ALIGNED_ALLOC(MAT3_ALIGNMENT,  sizeof(mat3))
+#define ALLOC_PLANE ALIGNED_ALLOC(PLANE_ALIGNMENT, sizeof(plane))
 
 // #define VAL2ADDR(val) NUM2PTR(rb_funcall(rb_ivar_get(val, rb_intern("@addr")), rb_intern("to_i"), 0))
 
 static inline void *VAL2ADDR(VALUE val, size_t min_size) {
-  // VALUE addr = rb_ivar_get(val, rb_intern("@addr"));
   VALUE addr = rb_funcall(val, rb_intern("addr"), 0);
   VALUE size = rb_funcall(addr, rb_intern("size"), 0);
   if (min_size > NUM2SIZET(size))
@@ -124,6 +127,7 @@ static inline void *VAL2ADDR(VALUE val, size_t min_size) {
 #define VAL2AABB(val)    (*((aabb    *)(VAL2ADDR(val, sizeof(aabb)    ))))
 #define VAL2QUAT(val)    (*((quat    *)(VAL2ADDR(val, sizeof(quat)    ))))
 #define VAL2FRUSTUM(val) (*((frustum *)(VAL2ADDR(val, sizeof(frustum) ))))
+#define VAL2PLANE(val)   (*((plane   *)(VAL2ADDR(val, sizeof(plane)   ))))
 
 #define NUM2FLT(val) ((float) NUM2DBL(val))
 

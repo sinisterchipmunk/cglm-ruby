@@ -13,7 +13,8 @@ VALUE rb_cFiddle     = Qnil,
       rb_mEuler      = Qnil,
       rb_cQuat       = Qnil,
       rb_cFrustum    = Qnil,
-      rb_cSphere     = Qnil;
+      rb_cSphere     = Qnil,
+      rb_cPlane      = Qnil;
 
 VALUE rb_cglm_alloc_type(VALUE self, VALUE klass) {
   VALUE rsize  = rb_funcall(klass, rb_intern("size"), 0);
@@ -42,6 +43,7 @@ void Init_cglm(void) {
   rb_cFrustum    = rb_define_class_under(rb_mCGLM, "Frustum",    rb_cObject);
   rb_cSphere     = rb_define_class_under(rb_mCGLM, "Sphere",     rb_cVec4);
   rb_cQuat       = rb_define_class_under(rb_mCGLM, "Quat",       rb_cVec4);
+  rb_cPlane      = rb_define_class_under(rb_mCGLM, "Plane",      rb_cVec4);
 
   rb_define_const(rb_mCGLM, "E" ,              DBL2NUM(GLM_E));
   rb_define_const(rb_mCGLM, "LOG2E",           DBL2NUM(GLM_LOG2E));

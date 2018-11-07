@@ -16,7 +16,7 @@ module CGLM
     end
 
     def copy_to(other)
-      size = @addr.size > other.addr.size ? other.addr.size : @addr.size
+      size = addr.size > other.addr.size ? other.addr.size : addr.size
       other.addr[0, size] = addr[0, size]
     end
 

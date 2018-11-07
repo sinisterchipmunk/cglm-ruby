@@ -11,6 +11,12 @@ class CglmPlaneTest < Minitest::Test
     refute_equal a.addr, b.addr
   end
 
+  def test_normalize
+    a = CGLM::Plane.new([0, 10, 0], 20)
+    a.normalize!
+    assert a =~ Vec4.new([0, 1, 0, 10])
+  end
+
   def test_initialize
     plane = CGLM::Plane.new([0, 1, 0], 1)
     assert_kind_of CGLM::Vec4, plane
