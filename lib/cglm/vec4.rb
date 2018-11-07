@@ -16,6 +16,11 @@ module CGLM
       end
     end
 
+    # Returns true if the given value is very close to this Vec4. If `other`
+    # is a scalar (number), each component in this vector must be very close
+    # to the scalar. If it's a vector, it must be a Vec4 and each component
+    # of this Vec4 must be very close to the corresponding component of
+    # `other`. See #equalish_vec4 and #equalish_scalar.
     def =~(other)
       case other
       when VectorType then equalish_vec4(other)
