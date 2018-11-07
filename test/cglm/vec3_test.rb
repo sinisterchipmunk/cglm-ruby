@@ -18,6 +18,7 @@ class CglmVec3Test < Minitest::Test
     mem[2*Fiddle::SIZEOF_FLOAT, Fiddle::SIZEOF_FLOAT] = [1.5].pack('F')
 
     vec = CGLM::Vec3.new(addr: mem)
+    assert_equal mem, vec.to_ptr
     assert_equal mem, vec.addr
     assert_equal 0.5, vec[0]
     assert_equal 1.0, vec[1]

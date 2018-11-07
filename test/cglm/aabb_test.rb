@@ -15,6 +15,7 @@ class CglmAABBTest < Minitest::Test
     mem = Fiddle::Pointer.malloc(Fiddle::SIZEOF_FLOAT * 6)
     aabb = CGLM::AABB.new(addr: mem)
     assert_equal mem,                              aabb.addr
+    assert_equal mem,                              aabb.to_ptr
     assert_equal mem,                              aabb[0].addr
     assert_equal (mem + Fiddle::SIZEOF_FLOAT * 3), aabb[1].addr
 

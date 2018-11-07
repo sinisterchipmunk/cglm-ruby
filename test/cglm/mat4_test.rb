@@ -17,6 +17,13 @@ class CGLM::Mat4Test < Minitest::Test
     assert_equal start, m.to_a.map { |a| a.to_a }
   end
 
+  def test_memory
+    addr = CGLM.alloc(Mat4)
+    mat = Mat4.new(addr: addr)
+    assert_equal addr, mat.addr
+    assert_equal addr, mat.to_ptr
+  end
+
   def test_init_from_array_of_vec3s_and_vec4s
     start = [CGLM::Vec3.new([1,2,3]),
              CGLM::Vec4.new([5,6,7,8]),

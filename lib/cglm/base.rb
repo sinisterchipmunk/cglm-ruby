@@ -3,6 +3,7 @@ require 'fiddle'
 module CGLM
   class Base
     attr_accessor :addr
+    alias to_ptr addr
 
     def initialize(addr: CGLM.alloc(self.class).tap { |ptr|
       # Init malloc'd values to 0; there is a PR to fiddle for this, then we

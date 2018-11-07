@@ -11,6 +11,13 @@ class CGLM::Mat3Test < Minitest::Test
     refute_equal a.addr, b.addr
   end
 
+  def test_memory
+    addr = CGLM.alloc(Mat3)
+    mat = Mat3.new(addr: addr)
+    assert_equal addr, mat.addr
+    assert_equal addr, mat.to_ptr
+  end
+
   def test_mat3 # taken from cglm tests
     m1 = Mat3.identity
     m2 = Mat3.identity
