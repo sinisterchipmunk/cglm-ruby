@@ -1,0 +1,39 @@
+PATH
+  remote: .
+  specs:
+    cglm (0.1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    docile (1.3.1)
+    github-markup (3.0.1)
+    json (2.1.0)
+    minitest (5.11.3)
+    rake (10.5.0)
+    rake-compiler (1.0.5)
+      rake
+    redcarpet (3.4.0)
+    simplecov (0.16.1)
+      docile (~> 1.1)
+      json (>= 1.8, < 3)
+      simplecov-html (~> 0.10.0)
+    simplecov-html (0.10.2)
+    yard (0.9.16)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 1.17)
+  cglm!
+  github-markup
+  minitest (~> 5.0)
+  rake (~> 10.0)
+  rake-compiler
+  redcarpet
+  simplecov
+  yard (~> 0.9)
+
+BUNDLED WITH
+   1.17.1
