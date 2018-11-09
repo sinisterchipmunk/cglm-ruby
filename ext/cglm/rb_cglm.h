@@ -1,6 +1,15 @@
 #ifndef RB_CGLM_H
 #define RB_CGLM_H 1
 
+#ifdef __MINGW32__
+#include <stdlib.h>
+#include <intrin.h>
+#include <malloc.h>
+#include <winsock2.h>
+#include <windows.h>
+#define drand48() (((double)rand()) / RAND_MAX)
+#endif // __MINGW32__
+
 #include "ruby.h"
 #include <errno.h>
 
@@ -82,7 +91,13 @@ static inline VALUE CGLM_NEW(VALUE klass, size_t size, void *addr) {
 
 static inline void *__aligned_alloc(size_t align, size_t size) {
   void *mem = NULL;
+#ifdef __MINGW32__
+  mem = _aligned_malloc(size, align);
+  int err = 0;
+  if (!mem) err = ENOMEM;
+#else
   int err = posix_memalign(&mem, align, size);
+#endif
   switch(err) {
     case EINVAL:
       rb_raise(rb_eRuntimeError, "Alignment %zu was not a power of two, or was not a multiple of sizeof(void *) == %zu", align, sizeof(void *));

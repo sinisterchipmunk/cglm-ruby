@@ -32,11 +32,11 @@ VALUE rb_cglm_cam_sizes(int argc, VALUE *argv, VALUE self) {
   else fovy = argv[0];
   vec4 out;
   glm_persp_sizes(VAL2MAT4(self), NUM2FLT(fovy), out);
-  VALUE near = rb_ary_new_from_args(2, DBL2NUM(out[0]), DBL2NUM(out[1]));
-  VALUE far  = rb_ary_new_from_args(2, DBL2NUM(out[2]), DBL2NUM(out[3]));
+  VALUE n = rb_ary_new_from_args(2, DBL2NUM(out[0]), DBL2NUM(out[1]));
+  VALUE f  = rb_ary_new_from_args(2, DBL2NUM(out[2]), DBL2NUM(out[3]));
   VALUE dest = rb_hash_new();
-  rb_hash_aset(dest, ID2SYM(rb_intern("near")), near);
-  rb_hash_aset(dest, ID2SYM(rb_intern("far")), far);
+  rb_hash_aset(dest, ID2SYM(rb_intern("near")), n);
+  rb_hash_aset(dest, ID2SYM(rb_intern("far")), f);
   return dest;
 }
 
@@ -49,9 +49,9 @@ VALUE rb_cglm_cam_decomp_top_and_bottom(VALUE self) {
 
 /* call-seq: near_and_far => Array */
 VALUE rb_cglm_cam_decomp_near_and_far(VALUE self) {
-  float near, far;
-  glm_persp_decomp_z(VAL2MAT4(self), &near, &far);
-  return rb_ary_new_from_args(2, DBL2NUM(near), DBL2NUM(far));
+  float n, f;
+  glm_persp_decomp_z(VAL2MAT4(self), &n, &f);
+  return rb_ary_new_from_args(2, DBL2NUM(n), DBL2NUM(f));
 }
 
 /* call-seq: left => Numeric */
@@ -84,16 +84,16 @@ VALUE rb_cglm_cam_decomp_bottom(VALUE self) {
 
 /* call-seq: near => Numeric */
 VALUE rb_cglm_cam_decomp_near(VALUE self) {
-  float near;
-  glm_persp_decomp_near(VAL2MAT4(self), &near);
-  return DBL2NUM(near);
+  float n;
+  glm_persp_decomp_near(VAL2MAT4(self), &n);
+  return DBL2NUM(n);
 }
 
 /* call-seq: far => Numeric */
 VALUE rb_cglm_cam_decomp_far(VALUE self) {
-  float far;
-  glm_persp_decomp_far(VAL2MAT4(self), &far);
-  return DBL2NUM(far);
+  float f;
+  glm_persp_decomp_far(VAL2MAT4(self), &f);
+  return DBL2NUM(f);
 }
 
 
@@ -105,10 +105,10 @@ VALUE rb_cglm_cam_decomp_far(VALUE self) {
  */
 VALUE rb_cglm_cam_frustum_decomp(VALUE self) {
   VALUE hash = rb_hash_new();
-  float left, top, right, bottom, near, far;
-  glm_persp_decomp(VAL2MAT4(self), &near, &far, &top, &bottom, &left, &right);
-  rb_hash_aset(hash, ID2SYM(rb_intern("near")),   DBL2NUM(near));
-  rb_hash_aset(hash, ID2SYM(rb_intern("far")),    DBL2NUM(far));
+  float left, top, right, bottom, n, f;
+  glm_persp_decomp(VAL2MAT4(self), &n, &f, &top, &bottom, &left, &right);
+  rb_hash_aset(hash, ID2SYM(rb_intern("near")),   DBL2NUM(n));
+  rb_hash_aset(hash, ID2SYM(rb_intern("far")),    DBL2NUM(f));
   rb_hash_aset(hash, ID2SYM(rb_intern("left")),   DBL2NUM(left));
   rb_hash_aset(hash, ID2SYM(rb_intern("right")),  DBL2NUM(right));
   rb_hash_aset(hash, ID2SYM(rb_intern("bottom")), DBL2NUM(bottom));

@@ -1,6 +1,9 @@
 #define GLM_CUSTOM_CLIPSPACE 1
 #include "cglm/types.h"
 
+#undef near
+#undef far
+
 /* near */
 static float CSCOORD_LBN[4] = {-1.0f, -1.0f, -1.0f, 1.0f};
 static float CSCOORD_LTN[4] = {-1.0f,  1.0f, -1.0f, 1.0f};
@@ -48,20 +51,20 @@ VALUE rb_cglm_frustum_singleton_planes(int argc, VALUE *argv, VALUE self) {
   vec4 planes[6];
   glm_frustum_planes(VAL2MAT4(mat), planes);
 
-  #define HASH_GET_OR_SET(index, name)                     \
-    VALUE name = rb_hash_aref(dest, SYMBOL(#name));        \
+  #define HASH_GET_OR_SET(index, name, str)                     \
+    VALUE name = rb_hash_aref(dest, SYMBOL(str));        \
     if (NIL_P(name)) {                                     \
       name = VEC4_NEW(ALLOC_VEC4);                     \
-      rb_hash_aset(dest, SYMBOL(#name), name);             \
+      rb_hash_aset(dest, SYMBOL(str), name);             \
     }                                                      \
     memcpy(&VAL2VEC4(name), &planes[index], sizeof(vec4));
 
-    HASH_GET_OR_SET(GLM_LEFT,   left);
-    HASH_GET_OR_SET(GLM_RIGHT,  right);
-    HASH_GET_OR_SET(GLM_BOTTOM, bottom);
-    HASH_GET_OR_SET(GLM_TOP,    top);
-    HASH_GET_OR_SET(GLM_NEAR,   near);
-    HASH_GET_OR_SET(GLM_FAR,    far);
+    HASH_GET_OR_SET(GLM_LEFT,   left, "left");
+    HASH_GET_OR_SET(GLM_RIGHT,  right, "right");
+    HASH_GET_OR_SET(GLM_BOTTOM, bottom, "bottom");
+    HASH_GET_OR_SET(GLM_TOP,    top, "top");
+    HASH_GET_OR_SET(GLM_NEAR,   n, "near");
+    HASH_GET_OR_SET(GLM_FAR,    f, "far");
   #undef HASH_GET_OR_SET
 
   return dest;
@@ -186,13 +189,13 @@ VALUE rb_cglm_frustum_singleton_aabb(int argc, VALUE *argv, VALUE self) {
  *   Vec4's). If omitted, one will be created.
  */
 VALUE rb_cglm_frustum_singleton_corners_at(int argc, VALUE *argv, VALUE self) {
-  VALUE corners_v, split, far, dest;
-  rb_scan_args(argc, argv, "31", &corners_v, &split, &far, &dest);
+  VALUE corners_v, split, f, dest;
+  rb_scan_args(argc, argv, "31", &corners_v, &split, &f, &dest);
   if (NIL_P(dest)) dest = rb_hash_new();
   vec4 corners[8];
   hash_to_corners(corners, corners_v);
   vec4 plane_corners[4];
-  glm_frustum_corners_at(corners, NUM2FLT(split), NUM2FLT(far), plane_corners);
+  glm_frustum_corners_at(corners, NUM2FLT(split), NUM2FLT(f), plane_corners);
 
   #define HASH_GET_OR_SET(index, name)                     \
     VALUE name = rb_hash_aref(dest, SYMBOL(#name));        \
@@ -250,9 +253,9 @@ VALUE rb_cglm_frustum_center(int argc, VALUE *argv, VALUE self) {
  */
 VALUE rb_cglm_frustum_to_aabb(int argc, VALUE *argv, VALUE self) {
   VALUE corners = rb_funcall(self, rb_intern("corners"), 0);
-  VALUE split, far, dest;
-  rb_scan_args(argc, argv, "21", &split, &far, &dest);
-  return rb_funcall(rb_cFrustum, rb_intern("aabb"), 4, corners, split, far, dest);
+  VALUE split, f, dest;
+  rb_scan_args(argc, argv, "21", &split, &f, &dest);
+  return rb_funcall(rb_cFrustum, rb_intern("aabb"), 4, corners, split, f, dest);
 }
 
 /* call-seq: corners_at(split, far[, dest]) => dest | new Hash
@@ -261,9 +264,9 @@ VALUE rb_cglm_frustum_to_aabb(int argc, VALUE *argv, VALUE self) {
  */
 VALUE rb_cglm_frustum_corners_at(int argc, VALUE *argv, VALUE self) {
   VALUE corners = rb_funcall(self, rb_intern("corners"), 0);
-  VALUE split, far, dest;
-  rb_scan_args(argc, argv, "21", &split, &far, &dest);
-  return rb_funcall(rb_cFrustum, rb_intern("corners_at"), 4, corners, split, far, dest);
+  VALUE split, f, dest;
+  rb_scan_args(argc, argv, "21", &split, &f, &dest);
+  return rb_funcall(rb_cFrustum, rb_intern("corners_at"), 4, corners, split, f, dest);
 }
 
 void Init_cglm_frustum() {
