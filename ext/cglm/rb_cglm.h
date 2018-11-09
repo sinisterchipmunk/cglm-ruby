@@ -1,15 +1,6 @@
 #ifndef RB_CGLM_H
 #define RB_CGLM_H 1
 
-#ifdef __MINGW32__
-#include <stdlib.h>
-#include <intrin.h>
-#include <malloc.h>
-#include <winsock2.h>
-#include <windows.h>
-#define drand48() (((double)rand()) / RAND_MAX)
-#endif // __MINGW32__
-
 #include "ruby.h"
 #include <errno.h>
 
@@ -20,6 +11,35 @@
 #define FLT_EPSILON 0.00001
 
 #include "cglm/cglm.h"
+
+#ifdef __MINGW32__
+#include <stdlib.h>
+#include <intrin.h>
+#include <malloc.h>
+#include <winsock2.h>
+#include <windows.h>
+#define drand48() (((double)rand()) / RAND_MAX)
+#undef GLM_VEC3_ONE_INIT
+#undef GLM_VEC3_ZERO_INIT
+#undef GLM_VEC3_ONE
+#undef GLM_VEC3_ZERO
+#undef GLM_YUP
+#undef GLM_ZUP
+#undef GLM_XUP
+#undef GLM_VEC4_ONE
+#undef GLM_VEC4_BLACK
+#undef GLM_VEC4_ZERO
+#define GLM_VEC3_ONE_INIT   {1.0f, 1.0f, 1.0f}
+#define GLM_VEC3_ZERO_INIT  {0.0f, 0.0f, 0.0f}
+#define GLM_VEC3_ONE  GLM_VEC3_ONE_INIT
+#define GLM_VEC3_ZERO GLM_VEC3_ZERO_INIT
+#define GLM_YUP  {0.0f, 1.0f, 0.0f}
+#define GLM_ZUP  {0.0f, 0.0f, 1.0f}
+#define GLM_XUP  {1.0f, 0.0f, 0.0f}
+#define GLM_VEC4_ONE        GLM_VEC4_ONE_INIT
+#define GLM_VEC4_BLACK      GLM_VEC4_BLACK_INIT
+#define GLM_VEC4_ZERO       GLM_VEC4_ZERO_INIT
+#endif // __MINGW32__
 
 #if SIZEOF_VOIDP == SIZEOF_LONG
 # define PTR2NUM(x)   (LONG2NUM((long)(x)))
