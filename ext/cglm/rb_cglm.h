@@ -19,6 +19,7 @@
 #include <winsock2.h>
 #include <windows.h>
 #define drand48() (((double)rand()) / RAND_MAX)
+#endif // __MINGW32__
 #undef GLM_VEC3_ONE_INIT
 #undef GLM_VEC3_ZERO_INIT
 #undef GLM_VEC3_ONE
@@ -39,7 +40,6 @@
 #define GLM_VEC4_ONE        GLM_VEC4_ONE_INIT
 #define GLM_VEC4_BLACK      GLM_VEC4_BLACK_INIT
 #define GLM_VEC4_ZERO       GLM_VEC4_ZERO_INIT
-#endif // __MINGW32__
 
 #if SIZEOF_VOIDP == SIZEOF_LONG
 # define PTR2NUM(x)   (LONG2NUM((long)(x)))
@@ -92,13 +92,13 @@ typedef struct { vec4 planes[6];  } frustum;
 typedef vec4 quat;
 typedef vec4 plane;
 
-inline size_t vec3_size()  { return sizeof(vec3);  }
-inline size_t vec4_size()  { return sizeof(vec4);  }
-inline size_t aabb_size()  { return sizeof(aabb);  }
-inline size_t mat4_size()  { return sizeof(mat4);  }
-inline size_t mat3_size()  { return sizeof(mat4);  }
-inline size_t quat_size()  { return sizeof(mat4);  }
-inline size_t plane_size() { return sizeof(plane); }
+static inline size_t vec3_size()  { return sizeof(vec3);  }
+static inline size_t vec4_size()  { return sizeof(vec4);  }
+static inline size_t aabb_size()  { return sizeof(aabb);  }
+static inline size_t mat4_size()  { return sizeof(mat4);  }
+static inline size_t mat3_size()  { return sizeof(mat4);  }
+static inline size_t quat_size()  { return sizeof(mat4);  }
+static inline size_t plane_size() { return sizeof(plane); }
 
 #define PTR2FIDDLE(addr, size) rb_funcall(rb_cPointer, rb_intern("new"), 2, PTR2NUM(addr), SIZET2NUM(size))
 
