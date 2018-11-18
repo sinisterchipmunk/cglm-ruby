@@ -53,21 +53,13 @@ VALUE rb_cglm_quat_invert(int argc, VALUE *argv, VALUE self) {
   VALUE dest;
   rb_scan_args(argc, argv, "01", &dest);
   if (NIL_P(dest)) dest = QUAT_NEW(ALLOC_QUAT);
-  // https://github.com/recp/cglm/pull/65
-  // glm_quat_inv(VAL2QUAT(self), VAL2QUAT(dest));
-  CGLM_ALIGN(16) versor conj;
-  glm_quat_conjugate(VAL2QUAT(self), conj);
-  glm_vec4_scale(conj, 1.0f / glm_vec4_norm2(VAL2QUAT(self)), VAL2QUAT(dest));
+  glm_quat_inv(VAL2QUAT(self), VAL2QUAT(dest));
   return dest;
 }
 
 /* call-seq: invert! => self */
 VALUE rb_cglm_quat_invert_self(VALUE self) {
-  // https://github.com/recp/cglm/pull/65
-  // glm_quat_inv(VAL2QUAT(self), VAL2QUAT(self));
-  CGLM_ALIGN(16) versor conj;
-  glm_quat_conjugate(VAL2QUAT(self), conj);
-  glm_vec4_scale(conj, 1.0f / glm_vec4_norm2(VAL2QUAT(self)), VAL2QUAT(self));
+  glm_quat_inv(VAL2QUAT(self), VAL2QUAT(self));
   return self;
 }
 
