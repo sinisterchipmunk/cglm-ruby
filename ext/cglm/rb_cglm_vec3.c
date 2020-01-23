@@ -865,6 +865,8 @@ void Init_cglm_vec3() {
 
   rb_define_alias(rb_cVec3, "invert",     "flip_signs");
   rb_define_alias(rb_cVec3, "invert!",    "flip_signs!");
+  rb_define_alias(rb_cVec3, "negate",     "flip_signs");
+  rb_define_alias(rb_cVec3, "negate!",    "flip_signs!");
   rb_define_alias(rb_cVec3, "magnitude",  "norm");
   rb_define_alias(rb_cVec3, "mag",        "norm");
   rb_define_alias(rb_cVec3, "magnitude2", "norm2");
