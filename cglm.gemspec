@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Colin MacKenzie IV"]
   spec.email         = ["sinisterchipmunk@gmail.com"]
 
-  spec.summary       = %q{CGLM bindings for Ruby}
+  spec.summary       = %q{Ruby bindings for CGLM (https://github.com/recp/cglm), a high performance math library for graphics applications.}
   spec.homepage      = "https://github.com/sinisterchipmunk/cglm-ruby"
   spec.license       = "MIT"
 
