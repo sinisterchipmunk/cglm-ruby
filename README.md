@@ -1,5 +1,7 @@
 # CGLM
 
+[![Build Status](https://travis-ci.org/sinisterchipmunk/cglm-ruby.svg?branch=master)](https://travis-ci.org/sinisterchipmunk/cglm-ruby)
+
 Ruby bindings for [CGLM](https://github.com/recp/cglm), a high performance math library for OpenGL.
 
 [CGLM](https://github.com/recp/cglm) provides support for SIMD on CPUs that support it in order to deliver better performance. This requires the variables to be aligned to 8-, 16- and 32-byte boundaries, but this gem automatically handles this requirement so you don't have to think about that.
