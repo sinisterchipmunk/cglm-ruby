@@ -11,6 +11,18 @@ class CglmVec4Test < Minitest::Test
     refute_equal a.addr, b.addr
   end
 
+  def test_each
+    accum = []
+    CGLM::Vec4.new([1,2,3,4]).each do |i|
+      accum << i
+    end
+    assert_equal [1, 2, 3, 4], accum
+  end
+
+  def test_to_a
+    assert_equal [1,2,3,4], CGLM::Vec4.new([1,2,3,4]).to_a
+  end
+
   def test_vec4 # taken from cglm
     assert Vec4.zero == Vec4.new
     assert Vec4.one  == Vec4.new([1, 1, 1, 1])

@@ -2,6 +2,18 @@ require "test_helper"
 require 'fiddle/import'
 
 class CglmQuatTest < Minitest::Test
+  def test_each
+    accum = []
+    CGLM::Quat.new([1,2,3,4]).each do |i|
+      accum << i
+    end
+    assert_equal [1, 2, 3, 4], accum
+  end
+
+  def test_to_a
+    assert_equal [1,2,3,4], CGLM::Quat.new([1,2,3,4]).to_a
+  end
+
   def test_quat # taken from cglm tests
     # 0. test identiy quat
     q4 = Quat.identity

@@ -1,7 +1,7 @@
 module CGLM
   class Vec3 < VectorType
-    def to_a
-      [self[0], self[1], self[2]]
+    def size
+      3
     end
 
     def inspect

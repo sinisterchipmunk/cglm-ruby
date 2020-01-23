@@ -11,6 +11,18 @@ class CglmVec3Test < Minitest::Test
     refute_equal a.addr, b.addr
   end
 
+  def test_each
+    accum = []
+    CGLM::Vec3.new([1,2,3]).each do |i|
+      accum << i
+    end
+    assert_equal [1, 2, 3], accum
+  end
+
+  def test_to_a
+    assert_equal [1,2,3], CGLM::Vec3.new([1,2,3]).to_a
+  end
+
   def test_initialize_from_memory_address
     mem = Fiddle::Pointer.malloc(Fiddle::SIZEOF_FLOAT * 3)
     mem[                     0, Fiddle::SIZEOF_FLOAT] = [0.5].pack('F')
