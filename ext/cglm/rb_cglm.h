@@ -2,6 +2,7 @@
 #define RB_CGLM_H 1
 
 #include "ruby.h"
+#include "ruby_pre27.h"
 #include <errno.h>
 
 // Based on unit test results I think the FLT_EPSILON that is used for fuzzy
@@ -106,7 +107,8 @@ static inline VALUE CGLM_NEW(VALUE klass, size_t size, void *addr) {
   VALUE kw = rb_hash_new();
   VALUE ptr = PTR2FIDDLE(addr, size);
   rb_hash_aset(kw, ID2SYM(rb_intern("addr")), ptr);
-  return rb_funcall(klass, rb_intern("new"), 1, kw);
+  VALUE kwarg[] = { kw };
+  return rb_funcallv_kw(klass, rb_intern("new"), 1, kwarg, 1);
 }
 
 static inline void *__aligned_alloc(size_t align, size_t size) {
