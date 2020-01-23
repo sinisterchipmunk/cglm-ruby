@@ -52,12 +52,8 @@ class CGLM::Mat4Test < Minitest::Test
     assert_equal [8,  0,  0,  0], m.to_a[2]
     assert_equal [9, 10, 11, 12], m.to_a[3]
 
-    # the white space matters
-    assert_match         '[ 1.0,  2.0,  3.0,  0.0,
-                            4.0,  5.0,  6.0,  7.0,
-                            8.0,  0.0,  0.0,  0.0,
-                            9.0, 10.0, 11.0, 12.0]',
-                  m.inspect
+    assert_match(/\[ 1.0,  2.0,  3.0,  0.0,\n\s{14,28}4.0,  5.0,  6.0,  7.0,\n\s{14,28}8.0,  0.0,  0.0,  0.0,\n\s{14,28}9.0, 10.0, 11.0, 12.0\]/,
+                 m.inspect)
   end
 
   def test_mat4 # taken from cglm tests
