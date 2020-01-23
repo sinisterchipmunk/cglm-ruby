@@ -3,11 +3,10 @@ require 'fileutils'
 require 'rubygems/package'
 require 'zlib'
 
-#CGLM_VERSION = '0.5.0'
-CGLM_VERSION = '89f64f079477b1af15f47e6b96db52c767acb057'
+CGLM_VERSION = 'v0.6.2'
 cglm_source_url = "https://github.com/recp/cglm/archive/#{CGLM_VERSION}.tar.gz"
 cglm_tar_gz = File.expand_path("cglm-#{CGLM_VERSION}.tar.gz", __dir__)
-cglm_dir = File.expand_path("cglm-#{CGLM_VERSION}", __dir__)
+cglm_dir = File.expand_path("cglm-0.6.2", __dir__)
 
 # fetch cglm unless it's already on the file system
 unless File.exist?(cglm_dir)
