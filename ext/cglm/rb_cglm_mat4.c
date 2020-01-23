@@ -161,7 +161,7 @@ VALUE rb_cglm_mat4_invert(int argc, VALUE *argv, VALUE self) {
  *
  * Computes the inverse of this matrix in-place and returns `self`.
  */
-VALUE rb_cglm_mat4_invert_self(int argc, VALUE *argv, VALUE self) {
+VALUE rb_cglm_mat4_invert_self(VALUE self) {
   glm_mat4_inv(VAL2MAT4(self), VAL2MAT4(self));
   return self;
 }
@@ -191,7 +191,7 @@ VALUE rb_cglm_mat4_invert_fast(int argc, VALUE *argv, VALUE self) {
  *   e.g Newton-Raphson. This should work faster than normal, but will be less
  *   precise.
  */
-VALUE rb_cglm_mat4_invert_fast_self(int argc, VALUE *argv, VALUE self) {
+VALUE rb_cglm_mat4_invert_fast_self(VALUE self) {
   glm_mat4_inv_fast(VAL2MAT4(self), VAL2MAT4(self));
   return self;
 }
@@ -285,7 +285,7 @@ void Init_cglm_mat4() {
   rb_define_method(rb_cMat4, "mul_vec4",           rb_cglm_mat4_mul_vec4,           -1);
   rb_define_method(rb_cMat4, "mul_vec3",           rb_cglm_mat4_mul_vec3,           -1);
   rb_define_method(rb_cMat4, "mul_scalar",         rb_cglm_mat4_mul_scalar,         -1);
-  rb_define_method(rb_cMat4, "mul_scalar!",        rb_cglm_mat4_mul_scalar_self,     0);
+  rb_define_method(rb_cMat4, "mul_scalar!",        rb_cglm_mat4_mul_scalar_self,     1);
   rb_define_method(rb_cMat4, "transpose",          rb_cglm_mat4_transpose,          -1);
   rb_define_method(rb_cMat4, "transpose!",         rb_cglm_mat4_transpose_self,      0);
   rb_define_method(rb_cMat4, "determinant",        rb_cglm_mat4_determinant,         0);

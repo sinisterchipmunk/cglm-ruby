@@ -54,7 +54,7 @@ VALUE rb_cglm_mat3_transpose(int argc, VALUE *argv, VALUE self) {
  *
  * Transposes this matrix in-place and returns `self`.
  */
-VALUE rb_cglm_mat3_transpose_self(int argc, VALUE *argv, VALUE self) {
+VALUE rb_cglm_mat3_transpose_self(VALUE self) {
   glm_mat3_transpose(VAL2MAT3(self));
   return self;
 }
@@ -117,7 +117,7 @@ VALUE rb_cglm_mat3_inverse(int argc, VALUE *argv, VALUE self) {
  * Calcaultes the inverse of `self`, modifies `self` in-place, and returns
  * `self`.
  */
-VALUE rb_cglm_mat3_inverse_self(int argc, VALUE *argv, VALUE self) {
+VALUE rb_cglm_mat3_inverse_self(VALUE self) {
   glm_mat3_inv(VAL2MAT3(self), VAL2MAT3(self));
   return self;
 }
@@ -230,7 +230,7 @@ void Init_cglm_mat3() {
   rb_define_method(rb_cMat3, "mul_mat3",    rb_cglm_mat3_mul_mat3,       -1);
   rb_define_method(rb_cMat3, "mul_vec3",    rb_cglm_mat3_mul_vec3,       -1);
   rb_define_method(rb_cMat3, "mul_scalar",  rb_cglm_mat3_mul_scalar,     -1);
-  rb_define_method(rb_cMat3, "mul_scalar!", rb_cglm_mat3_mul_scalar_self, 0);
+  rb_define_method(rb_cMat3, "mul_scalar!", rb_cglm_mat3_mul_scalar_self, 1);
   rb_define_method(rb_cMat3, "transpose",   rb_cglm_mat3_transpose,      -1);
   rb_define_method(rb_cMat3, "transpose!",  rb_cglm_mat3_transpose_self,  0);
   rb_define_method(rb_cMat3, "to_quat",     rb_cglm_mat3_to_quat,        -1);
