@@ -153,7 +153,7 @@ static inline void *VAL2ADDR(VALUE val, size_t min_size) {
   VALUE addr = rb_funcall(val, rb_intern("addr"), 0);
   VALUE size = rb_funcall(addr, rb_intern("size"), 0);
   if (min_size > NUM2SIZET(size))
-    rb_raise(rb_eArgError, "memory store (size %zu) is not large enough to be converted into the requested type (size %zu)", NUM2SIZET(size), min_size);
+    rb_raise(rb_eArgError, "memory store (size %zu) is not large enough to be converted into the requested type (size %zu)", (size_t) NUM2SIZET(size), min_size);
   return NUM2PTR(rb_funcall(addr, rb_intern("to_i"), 0));
 }
 
