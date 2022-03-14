@@ -97,7 +97,7 @@ static inline size_t vec3_size()  { return sizeof(vec3);  }
 static inline size_t vec4_size()  { return sizeof(vec4);  }
 static inline size_t aabb_size()  { return sizeof(aabb);  }
 static inline size_t mat4_size()  { return sizeof(mat4);  }
-static inline size_t mat3_size()  { return sizeof(mat4);  }
+static inline size_t mat3_size()  { return sizeof(mat3);  }
 static inline size_t quat_size()  { return sizeof(mat4);  }
 static inline size_t plane_size() { return sizeof(plane); }
 

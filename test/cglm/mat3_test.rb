@@ -18,6 +18,13 @@ class CGLM::Mat3Test < Minitest::Test
     assert_equal addr, mat.to_ptr
   end
 
+  def test_size
+    # Don't want to put a tight constraint on the expected size of a mat3 due
+    # to alignment, architecture, etc. Let's be satisfied with "smaller than
+    # mat4".
+    assert Mat3.size < Mat4.size, 'Expected mat3 to be smaller than mat4'
+  end
+
   def test_mat3 # taken from cglm tests
     m1 = Mat3.identity
     m2 = Mat3.identity
