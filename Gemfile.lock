@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    cglm (0.1.2)
+    cglm (0.1.3)
 
 GEM
   remote: https://rubygems.org/
