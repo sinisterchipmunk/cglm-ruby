@@ -201,13 +201,13 @@ VALUE rb_cglm_quat_to_mat3t(int argc, VALUE *argv, VALUE self) {
 
 /* call-seq: lerp!(from, to, amount) => self */
 VALUE rb_cglm_quat_lerp_self(VALUE self, VALUE from, VALUE to, VALUE amount) {
-  glm_quat_lerp(VAL2QUAT(from), VAL2QUAT(to), NUM2FLT(to), VAL2QUAT(self));
+  glm_quat_lerp(VAL2QUAT(from), VAL2QUAT(to), NUM2FLT(amount), VAL2QUAT(self));
   return self;
 }
 
 /* call-seq: slerp!(from, to, amount) => self */
 VALUE rb_cglm_quat_slerp_self(VALUE self, VALUE from, VALUE to, VALUE amount) {
-  glm_quat_slerp(VAL2QUAT(from), VAL2QUAT(to), NUM2FLT(to), VAL2QUAT(self));
+  glm_quat_slerp(VAL2QUAT(from), VAL2QUAT(to), NUM2FLT(amount), VAL2QUAT(self));
   return self;
 }
 

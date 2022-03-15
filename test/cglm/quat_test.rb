@@ -145,6 +145,16 @@ class CglmQuatTest < Minitest::Test
     q5 = q3 * q4
     assert q5 =~ Quat.identity
 
-    # TODO: add tests for slerp, lerp
+    q = Quat.identity
+    from = Quat.identity
+    to = Quat.axis_angle Vec3.yup, 90.to_radians
+    v = Vec4.new [1, 0, 0, 1]
+    assert (q.slerp!(from, to, 1.0) * v) =~ Vec4.new([0, 0, 1, 1])
+
+    q = Quat.identity
+    from = Quat.identity
+    to = Quat.axis_angle Vec3.yup, 90.to_radians
+    v = Vec4.new [1, 0, 0, 1]
+    assert (q.lerp!(from, to, 1.0) * v) =~ Vec4.new([0, 0, 1, 1])
   end
 end
