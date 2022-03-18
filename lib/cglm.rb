@@ -13,6 +13,7 @@ end
 module CGLM
   require 'cglm/base'
   require 'cglm/vector_type'
+  require 'cglm/matrix_type'
   require 'cglm/aabb'
   require 'cglm/vec3'
   require 'cglm/vec4'

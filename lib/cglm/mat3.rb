@@ -1,5 +1,5 @@
 module CGLM
-  class Mat3 < Base
+  class Mat3 < MatrixType
     # Performs multiplication with `other` and returns the result.
     #
     # * `other` is a Mat3 or Vec3.
@@ -22,6 +22,13 @@ module CGLM
       vals.map! { |row| row.map { |val| val.to_s.rjust(longest_val_size) }.join(', ') }
       left = "#<#{self.class}@#{addr.to_i.to_s(16)} ["
       left + vals.join(",\n" + (" " * left.size)) + "]>"
+    end
+
+    # Returns a flat array of floats, rather than the 2D array returned by
+    # #to_a. Equivalent to `to_a.flatten`, but more efficient.
+    def to_flat_a
+      addr = self.addr
+      addr[0, addr.size].unpack("F*")
     end
   end
 end

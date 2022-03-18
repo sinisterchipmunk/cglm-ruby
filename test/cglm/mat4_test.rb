@@ -24,6 +24,16 @@ class CGLM::Mat4Test < Minitest::Test
     assert_equal addr, mat.to_ptr
   end
 
+  def test_to_flat_a
+    assert_equal [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1], Mat4.identity.to_flat_a
+  end
+
+  def test_copy_to
+    v = Vec3.new([0,1,0])
+    v2 = Vec3.new([1,2,3])
+    assert (v.copy_to(v2) + v2) =~ Vec3.new([0,2,0])
+  end
+
   def test_init_from_array_of_vec3s_and_vec4s
     start = [CGLM::Vec3.new([1,2,3]),
              CGLM::Vec4.new([5,6,7,8]),

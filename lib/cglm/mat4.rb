@@ -1,5 +1,5 @@
 module CGLM
-  class Mat4 < Base
+  class Mat4 < MatrixType
     def initialize(initial_values = nil, **args)
       super(**args)
       case initial_values

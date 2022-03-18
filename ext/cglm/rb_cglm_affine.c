@@ -130,22 +130,30 @@ VALUE rb_cglm_translate_z_self(VALUE self, VALUE flt) {
 }
 
 /* call-seq: translate(vec3) => new Mat4 */
-VALUE rb_cglm_translate_new(VALUE klass, VALUE vec_v) {
-  VALUE dest = MAT4_NEW(ALLOC_MAT4);
+VALUE rb_cglm_translate_new(int argc, VALUE *argv, VALUE klass) {
+  VALUE vec_v, dest;
+  rb_scan_args(argc, argv, "11", &vec_v, &dest);
+  if (NIL_P(dest)) dest = MAT4_NEW(ALLOC_MAT4);
   glm_translate_make(VAL2MAT4(dest), VAL2VEC3(vec_v));
   return dest;
 }
 
 /* call-seq: scale(vec3) => new Mat4 */
-VALUE rb_cglm_scale_new(VALUE klass, VALUE vec_v) {
-  VALUE dest = MAT4_NEW(ALLOC_MAT4);
+VALUE rb_cglm_scale_new(int argc, VALUE *argv, VALUE klass) {
+  VALUE vec_v, dest;
+  rb_scan_args(argc, argv, "11", &vec_v, &dest);
+  if (NIL_P(dest)) dest = MAT4_NEW(ALLOC_MAT4);
   glm_scale_make(VAL2MAT4(dest), VAL2VEC3(vec_v));
   return dest;
 }
 
-/* call-seq: rotate(axis, angle) => new Mat4 */
-VALUE rb_cglm_rotate_new(VALUE klass, VALUE axis, VALUE angle) {
-  VALUE dest = MAT4_NEW(ALLOC_MAT4);
+/*
+ * call-seq: rotate(axis, angle[, dest]) => dest | new Mat4
+ */
+VALUE rb_cglm_rotate_new(int argc, VALUE *argv, VALUE klass) {
+  VALUE axis, angle, dest;
+  rb_scan_args(argc, argv, "21", &axis, &angle, &dest);
+  if (NIL_P(dest)) dest = MAT4_NEW(ALLOC_MAT4);
   glm_rotate_make(VAL2MAT4(dest), (float) NUM2DBL(angle), VAL2VEC3(axis));
   return dest;
 }
@@ -318,8 +326,8 @@ void Init_cglm_affine() {
   rb_define_method(rb_cMat4, "decompose_rs",   rb_cglm_decompose_rs,     2);
   rb_define_method(rb_cMat4, "decompose",      rb_cglm_decompose,        3);
 
-  rb_define_singleton_method(rb_cMat4, "translate",            rb_cglm_translate_new, 1);
-  rb_define_singleton_method(rb_cMat4, "scale",                rb_cglm_scale_new,     1);
-  rb_define_singleton_method(rb_cMat4, "rotate",               rb_cglm_rotate_new,    2);
+  rb_define_singleton_method(rb_cMat4, "translate",            rb_cglm_translate_new,-1);
+  rb_define_singleton_method(rb_cMat4, "scale",                rb_cglm_scale_new,    -1);
+  rb_define_singleton_method(rb_cMat4, "rotate",               rb_cglm_rotate_new,   -1);
   rb_define_singleton_method(rb_cMat4, "axis_angle_rotate_at", rb_cglm_rotate_at_new, 3);
 }

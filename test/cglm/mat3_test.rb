@@ -18,6 +18,10 @@ class CGLM::Mat3Test < Minitest::Test
     assert_equal addr, mat.to_ptr
   end
 
+  def test_to_flat_a
+    assert_equal [1,0,0, 0,1,0, 0,0,1], Mat3.identity.to_flat_a
+  end
+
   def test_size
     # Don't want to put a tight constraint on the expected size of a mat3 due
     # to alignment, architecture, etc. Let's be satisfied with "smaller than

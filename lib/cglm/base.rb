@@ -18,7 +18,8 @@ module CGLM
 
     def copy_to(other)
       size = addr.size > other.addr.size ? other.addr.size : addr.size
-      other.addr[0, size] = addr[0, size]
+      other.addr[0, size] = addr
+      other
     end
 
     def dup(other = nil)

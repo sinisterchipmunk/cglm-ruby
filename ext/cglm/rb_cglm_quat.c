@@ -9,7 +9,9 @@ VALUE rb_cglm_quat_new_identity(int argc, VALUE *argv, VALUE self) {
   return dest;
 }
 
-/* call-seq: axis_angle(axis, angle[, dest]) => dest | new Quat */
+/*
+ * call-seq: axis_angle(axis, angle[, dest]) => dest | new Quat
+ */
 VALUE rb_cglm_quat_new_axis_angle(int argc, VALUE *argv, VALUE self) {
   VALUE axis, angle, dest;
   rb_scan_args(argc, argv, "21", &axis, &angle, &dest);
